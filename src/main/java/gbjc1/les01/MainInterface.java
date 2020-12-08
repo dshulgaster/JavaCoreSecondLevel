@@ -19,7 +19,7 @@ public class MainInterface {
         beingRun[2] = new Cat(200, 3);
         beingRun[3] = new Robot(100,0);
         beingRun[4] = new Cat(150,2);
-
+        
         Man man1 = new Man();
         Cat cat1 = new Cat();       // Если только бегающий класс: Running cat1 = new Cat();
         Robot robot1 = new Robot();
