@@ -5,6 +5,5 @@ import javax.swing.*;
 public class MainChat  {
     public static void main(String[] args) {
         new ChatWindow();
-
     }
 }
