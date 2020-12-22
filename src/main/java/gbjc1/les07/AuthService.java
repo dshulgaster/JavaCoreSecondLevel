@@ -7,9 +7,9 @@ class AuthService {
     List<Client> clients = new ArrayList();
 
     AuthService() {
-        clients.add(new Client("Pavel", "pavel1", "1234"));
-        clients.add(new Client("Oleg", "oleg1", "1234"));
-        clients.add(new Client("Nick", "nick1", "4321"));
+        clients.add(new Client("Pavel", "pavel1", "12"));
+        clients.add(new Client("Oleg", "oleg1", "12"));
+        clients.add(new Client("Nick", "nick1", "12"));
     }
 
     synchronized Client auth(String login, String password) {

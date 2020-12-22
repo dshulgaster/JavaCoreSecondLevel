@@ -17,7 +17,7 @@ class ClientHandler {
     private static int clientsCount = 0;
     private String nick;
     private static final Pattern QUIT_COMMAND = Pattern.compile("/exit\\s");
-    private static final Pattern NICK_COMMAND = Pattern.compile("@nick\\s+(\\w+)+");
+    private static final Pattern STR_COMMAND = Pattern.compile("/w\\s+(\\w+)\\s+(.*)");
     private static final String NEW_CLIENTS_MSG = "Новый участник! Теперь нас = ";
     private static final String EXIT_CLIENT_MSG = "Участник вышел! Теперь нас = ";
 
@@ -107,21 +107,21 @@ class ClientHandler {
             // Разбиваем сообщение на состовляющие комманды
             String[] messageData = newMessage.split("\\s");
             Matcher quitMatcher = QUIT_COMMAND.matcher(newMessage); // команда на выход пользователя
-            Matcher nickMatcher = NICK_COMMAND.matcher(newMessage); // команда на персональное сообщение
-//            if (messageData[0].equals("/exit")) {
-            if (quitMatcher.matches()) {
+            //Matcher nickMatcher = NICK_COMMAND.matcher(newMessage); // команда на выход пользователя
+            Matcher strMatcher = STR_COMMAND.matcher(newMessage); // команда на персональное сообщение
+            if (messageData[0].equals("/exit")) {
+//            if (quitMatcher.matches()) {
                 dataInputStream.close();
                 dataOutputStream.close();
                 socket.close();
                 server.onClientDisconnected(this);
-            } else if (nickMatcher.matches()) {        //персональное сообщение
-                nick = nickMatcher.group(0);
-                server.onNewMessage(client, "nickMatcher.group(0) = " + nickMatcher.group(0) + ", nickMatcher.group(1) = " + nickMatcher.group(1));
-                //server.onNewMessage(client, newMessage + " + nick " + nick);
-                //server.onNewPersonalMessage(client, nick, newMessage);
+            } else if (strMatcher.matches()) {        //персональное сообщение
+                String nick = strMatcher.group(1);    // второе слово = логин
+                String message = strMatcher.group(2); // все остальные слова после 2-го пробела = message
+                server.sendMessageTo(client, nick, message);
             } else {
                 //общее сообщение для всех
-                server.onNewMessage(client, newMessage);
+                server.sendBroadCastMessage(client, newMessage);
             }
         }
     }
