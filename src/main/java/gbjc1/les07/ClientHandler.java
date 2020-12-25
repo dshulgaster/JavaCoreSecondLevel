@@ -56,14 +56,14 @@ class ClientHandler {
 
     void sendMessage(Client client, String text) {
         try {
-            dataOutputStream.writeUTF(client.name + ": " + text);
+            dataOutputStream.writeUTF("/nm " + client.name + ": " + text);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private boolean auth(DataInputStream dataInputStream, DataOutputStream dataOutputStream) throws IOException {
-        dataOutputStream.writeUTF("Пожалуйста, введите логин и пароль через пробел!");
+//        dataOutputStream.writeUTF("Пожалуйста, введите логин и пароль через пробел!");
         // Цикл ожидания авторизации клиентов
         int tryCount = 0;
         int maxTryCount = 5;
@@ -72,15 +72,18 @@ class ClientHandler {
             String newMessage = dataInputStream.readUTF();
             // Разбиваем сообщение на состовляющие комманды
             String[] messageData = newMessage.split("\\s");
-            // Проверяем соответсует ли комманда комманде авторизации
+            // Проверяем соответствует ли комманда комманде авторизации
             if (messageData.length == 3 && messageData[0].equals("/auth")) {
                 tryCount++;
+                //dataOutputStream.writeUTF("???");
                 String login = messageData[1];
                 String password = messageData[2];
                 // Зарегистрирован ли данных пользователь
                 client = authService.auth(login, password);
                 if (client != null) {
                     // Если получилось авторизоваться то выходим из цикла
+                    dataOutputStream.writeUTF("/auth ok");
+                    System.out.println("login success");
                     break;
                 } else {
                     dataOutputStream.writeUTF("Неправильные логин и пароль!");
@@ -111,16 +114,22 @@ class ClientHandler {
             Matcher strMatcher = STR_COMMAND.matcher(newMessage); // команда на персональное сообщение
             if (messageData[0].equals("/exit")) {
 //            if (quitMatcher.matches()) {
+                System.out.println("Команда /exit ok");
+                dataOutputStream.writeUTF("/exit ok");
                 dataInputStream.close();
                 dataOutputStream.close();
                 socket.close();
-                server.onClientDisconnected(this);
+                //server.onClientDisconnected(this);
             } else if (strMatcher.matches()) {        //персональное сообщение
                 String nick = strMatcher.group(1);    // второе слово = логин
                 String message = strMatcher.group(2); // все остальные слова после 2-го пробела = message
+                dataOutputStream.writeUTF("/w ok");
+                System.out.println("Команда /w ok");
                 server.sendMessageTo(client, nick, message);
             } else {
                 //общее сообщение для всех
+                dataOutputStream.writeUTF("/b ok");
+                System.out.println("Команда /b ok");
                 server.sendBroadCastMessage(client, newMessage);
             }
         }
