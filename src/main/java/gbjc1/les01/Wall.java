@@ -4,7 +4,7 @@ public class Wall {
     public Wall() {
     }
 
-    public void doIt(Jumping Object) {
+    public void doIt(Participant Object) {
         Object.jump();
     }
 

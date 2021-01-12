@@ -4,7 +4,7 @@ public class Treadmill {
     public Treadmill() {
     }
 
-    public void doIt(Running Object) {
+    public void doIt(Participant Object) {
         Object.run();
     }
 }
