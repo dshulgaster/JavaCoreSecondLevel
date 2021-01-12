@@ -1,6 +1,6 @@
 package gbjc1.les01;
 
-public class Cat implements Jumping, Running {
+public class Cat implements Participant {
     protected int limitRun, limitJump;
     public String name = "Cat";
 
