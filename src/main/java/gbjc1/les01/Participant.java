@@ -1,11 +1,11 @@
 package gbjc1.les01;
 
-public interface Participant {
-    void run();
-    void jump();
-    void noRun();
-    void noJump();
-    boolean limitRun(int value);
-    boolean limitJump(int value);
-    //    String name = "";
+public interface Participant extends Ranner, Jumper {
+    default boolean doIt (Obstacle obstacle) {
+        return doAction(obstacle);
+    }
+
+    private boolean doAction(Obstacle obstacle) {
+        return obstacle.passObstacleBy(this);
+    }
 }
