@@ -1,55 +1,33 @@
 package gbjc1.les01;
 
 public class Cat implements Participant {
-    protected int limitRun, limitJump;
-    public String name = "Cat";
+    private final int limitRun, limitJump;
+    private final String name;
 
-    public Cat() {
-    }
-
-    public Cat(int limitRun, int limitJump) {
+    public Cat (int limitRun, int limitJump, String name) {
+        this.name = name;
         this.limitRun = limitRun;
         this.limitJump = limitJump;
     }
 
-    public int getLimitRun() {
-        return limitRun;
-    }
-
-    public int getLimitJump() {
-        return limitJump;
+    @Override
+    public int run() {
+        System.out.println("Я кот, " + this.name +  ", бегаю! Мой лимит на пробег: " + this.limitRun + " м.");
+        return this.limitRun;
     }
 
     @Override
-    public void jump() {
-        System.out.println("Я кот, прыгаю! Мой лимит на прыжок: " + this.limitJump + "\n");
+    public int jump() {
+        System.out.println("Я кот, " + this.name +  ", прыгаю! Мой лимит на прыжок: " + this.limitJump + " м.");
+        return this.limitJump;
     }
 
     @Override
-    public void run() {
-        System.out.println("Я кот, бегаю. Мой лимит на бег: " + this.limitRun + "\n");
+    public String toString() {
+        return "Cat{" +
+                "name='" + name + '\'' + " " +
+                "limitRun=" + limitRun +
+                ", limitJump=" + limitJump +
+                '}';
     }
-
-    @Override
-    public void noJump() {
-        System.out.println("Я кот, но лимит на прыжок исчерпан: " + this.limitJump + "\n");
-    }
-
-    @Override
-    public void noRun() {
-        System.out.println("Я кот, но лимит на бег исчерпан: " + this.limitRun + "\n");
-    }
-
-
-    @Override
-    public boolean limitRun(int value) {
-        return this.limitRun >= value;
-    }
-
-    @Override
-    public boolean limitJump(int value) {
-        return this.limitJump >= value;
-    }
-
-
 }

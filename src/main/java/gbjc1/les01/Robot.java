@@ -1,54 +1,34 @@
 package gbjc1.les01;
 
-public class Robot implements Participant  {
-    protected int limitRun, limitJump;
-    public String name = "Robot";
+public class Robot implements Participant {
+    private final int limitRun, limitJump;
+    private final String model;
+    //public String name = "Robot";
 
-    public Robot() {
-    }
-
-    public Robot(int limitRun, int limitJump) {
+    public Robot(int limitRun, int limitJump, String model) {
+        this.model = model;
         this.limitRun = limitRun;
         this.limitJump = limitJump;
     }
 
-    public int getLimitRun() {
-        return limitRun;
-    }
-
-    public int getLimitJump() {
-        return limitJump;
+    @Override
+    public int run() {
+        System.out.println("Я робот, " + this.model + "бегаю! Мой лимит на пробег: " + this.limitRun + " м.");
+        return this.limitRun;
     }
 
     @Override
-    public void jump() {
-        System.out.println("Я робот, прыгаю! Мой лимит на прыжок: " + this.limitJump + "\n");
+    public int jump() {
+        System.out.println("Я робот, " + this.model + ", прыгаю! Мой лимит на прыжок: " + this.limitJump  + " м.");
+        return this.limitJump;
     }
 
     @Override
-    public void run() {
-        System.out.println("Я робот, бегаю. Мой лимит на бег: " + this.limitRun + "\n");
+    public String toString() {
+        return "Robot{" +
+                "model='" + model + '\'' + " " +
+                "limitRun=" + limitRun +
+                ", limitJump=" + limitJump +
+                '}';
     }
-
-    @Override
-    public void noJump() {
-        System.out.println("Я робот, но лимит на прыжок исчерпан: " + this.limitJump + "\n");
-    }
-
-    @Override
-    public void noRun() {
-        System.out.println("Я робот, но лимит на бег исчерпан: " + this.limitRun + "\n");
-    }
-
-
-    @Override
-    public boolean limitRun(int value) {
-        return this.limitRun >= value;
-    }
-
-    @Override
-    public boolean limitJump(int value) {
-        return this.limitJump >= value;
-    }
-
 }
